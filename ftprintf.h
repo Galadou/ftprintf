@@ -17,14 +17,14 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-void	ft_putnbr(int n);
+int		ft_putnbr(int n);
+int		ft_putnbr_unsigned(unsigned int n);
 int		ft_printf(const char *str, ...);
-int		write_data(int nb, va_list lst);
-void	write_data_next(int nb, va_list lst);
-char	*ft_second_itoa(unsigned int n);
-void	hexa_base_16_lower(int n);
-void	hexa_base_16_upper(int n);
-void	hexa_base_16_pt(long int n);
+int		ft_putchar(char letter);
+int		ft_putstr(char	*str);
+int		hexa_base_16_lower(int n);
+int		hexa_base_16_upper(int n);
+int		hexa_base_16_pt(unsigned long int n);
 size_t	ft_strlen(const char *s);
 
 #endif

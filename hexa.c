@@ -12,41 +12,76 @@
 
 #include "ftprintf.h"
 
-void	hexa_base_16_lower(int n)
+int	hexa_base_16_lower(int n)
 {
 	unsigned int	nb;
 	char			*str;
+	int				c;
 
+	c = 0;
 	str = "0123456789abcdef";
 	nb = n;
-	if (nb > 16)
+	if (nb > 15)
 		hexa_base_16_lower(nb / 16);
 	nb = nb % 16;
 	write(1, &str[nb], 1);
+	if (n < 0)
+		c = 7;
+	else
+	{
+		while (n > 15)
+		{
+			n = n / 16;
+			c++;
+		}
+	}
+	return (c + 1);
 }
 
-void	hexa_base_16_upper(int n)
+int	hexa_base_16_upper(int n)
 {
 	unsigned int	nb;
 	char			*str;
+	int				c;
 
+	c = 0;
 	str = "0123456789ABCDEF";
 	nb = n;
-	if (nb > 16)
+	if (nb > 15)
 		hexa_base_16_upper(nb / 16);
 	nb = nb % 16;
 	write(1, &str[nb], 1);
+	if (n < 0)
+		c = 7;
+	else
+	{
+		while (n > 15)
+		{
+			n = n / 16;
+			c++;
+		}
+	}
+	return (c + 1);
 }
 
-void	hexa_base_16_pt(long int n)
+int	hexa_base_16_pt(unsigned long int n)
 {
-	unsigned long int	nb;
 	char				*str;
+	int					c;
 
+	c = 0;
 	str = "0123456789abcdef";
-	nb = n;
-	if (nb > 16)
-		hexa_base_16_pt(nb / 16);
-	nb = nb % 16;
-	write(1, &str[nb], 1);
+	if (!n)
+	{
+		write (1, "(nil)", 5);
+		return (5);
+	}
+	if (n > 15)
+		c = hexa_base_16_pt(n / 16);
+	if (c == 0)
+		c += write(1, "0x", 2);
+	c += 1;
+	n = n % 16;
+	write(1, &str[n], 1);
+	return (c);
 }

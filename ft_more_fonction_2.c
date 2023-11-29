@@ -11,12 +11,23 @@
 /* ************************************************************************** */
 
 #include "ftprintf.h"
+
 size_t	ft_strlen(const char *s)
 {
 	size_t	i;
+	size_t	c;
 
 	i = 0;
+	c = 0;
 	while (s[i] != '\0')
-		i++;
-	return (i);
+	{
+		if (s[i] == '%')
+			i = i + 2;
+		else
+		{
+			c++;
+			i++;
+		}
+	}
+	return (c);
 }

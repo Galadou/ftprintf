@@ -16,7 +16,6 @@ NAME		= libftprintf.a
 INCLUDES	= ftprintf.h
 
 SRC		= ft_printf.c\
-		write_data_type.c\
 		hexa.c\
 		ft_more_fonction.c\
 		ft_more_fonction_2.c

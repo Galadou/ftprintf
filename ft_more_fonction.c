@@ -12,86 +12,82 @@
 
 #include "ftprintf.h"
 
-void	ft_putnbr(int n)
+static int	if_int_min(void)
+{
+	write(1, "-2147483648", 11);
+	return (11);
+}
+
+int	ft_putnbr(int n)
 {
 	unsigned int	nb;
 	int				c;
+	int				count;
 
-	nb = n;
+	count = 0;
+	if (n == -2147483648)
+		return (if_int_min());
 	if (n < 0)
 	{
 		write(1, "-", 1);
-		nb = nb * -1;
+		n = n * -1;
+		count++;
 	}
+	nb = n;
 	if (nb > 9)
 		ft_putnbr((nb / 10));
 	nb = nb % 10;
 	c = nb + '0';
 	write(1, &c, 1);
-}
-
-static size_t	count_number(unsigned int n)
-{
-	size_t	c;
-
-	c = 0;
-	if (n == 0)
-		return (1);
-	while (n)
+	while (n > 9)
 	{
 		n = n / 10;
-		c++;
+		count++;
 	}
-	return (c);
+	return (count + 1);
 }
 
-static char	*ft_swap(char *str)
+int	ft_putnbr_unsigned(unsigned int n)
 {
-	char	b;
-	int		a;
-	int		z;
+	unsigned int	nb;
+	int				count;
+	int				c;
 
-	a = 0;
-	z = ft_strlen(str);
-	z--;
-	while (a < z)
+	count = 0;
+	nb = n;
+	if (nb > 9)
+		ft_putnbr((nb / 10));
+	nb = nb % 10;
+	c = nb + '0';
+	write(1, &c, 1);
+	while (n > 9)
 	{
-		b = str[a];
-		str[a] = str[z];
-		str[z] = b;
-		a++;
-		z--;
+		n = n / 10;
+		count++;
 	}
-	return (str);
+	return (count + 1);
 }
 
-static char	*write_str2(char *str, unsigned int n)
+int	ft_putchar(char letter)
+{
+	write(1, &letter, 1);
+	return (1);
+}
+
+int	ft_putstr(char	*str)
 {
 	int	i;
 
 	i = 0;
-	while (n > 9)
+	if (!str || str == NULL)
 	{
-		str[i] = (n % 10) + 48;
-		n = n / 10;
+		write(1, "(null)", 6);
+		return (6);
+	}
+	while (str[i] != '\0')
+	{
+		write(1, &str[i], 1);
 		i++;
 	}
-	str[i] = (n % 10) + 48;
-	i++;
-	str[i] = '\0';
-	str = ft_swap(str);
-	return (str);
-}
-
-char	*ft_second_itoa(unsigned int n)
-{
-	size_t	c;
-	char	*str;
-
-	c = count_number(n);
-	str = malloc(sizeof(char) * c + 1);
-	if (!str)
-		return (NULL);
-	str = write_str2(str, n);
-	return (str);
+	return (ft_strlen(str));
 }
